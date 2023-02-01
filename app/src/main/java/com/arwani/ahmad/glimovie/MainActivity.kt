@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.arwani.ahmad.glimovie.ui.JetMovieApp
 import com.arwani.ahmad.glimovie.ui.theme.GliMovieTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,24 +23,11 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = MaterialTheme.colors.primary
                 ) {
-                    Greeting("Android")
+                    JetMovieApp()
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    GliMovieTheme {
-        Greeting("Android")
     }
 }
