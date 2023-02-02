@@ -3,13 +3,17 @@ package com.arwani.ahmad.glimovie.ui.home
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.*
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -18,13 +22,16 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.arwani.ahmad.glimovie.R
+import com.arwani.ahmad.glimovie.ui.components.SearchBar
+import com.arwani.ahmad.glimovie.ui.theme.Blue50
 import com.arwani.ahmad.glimovie.ui.theme.Green100
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
-    navigateToDetail: (Int) -> Unit
+    navigateToDetail: (Int) -> Unit,
+    navigateToSearch: () -> Unit
 ) {
     viewModel.fetchGenres()
     val movies = viewModel.getPopularMovies("now_playing").collectAsLazyPagingItems()
@@ -36,6 +43,20 @@ fun MainScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
+
+        item(span = { GridItemSpan(2) }) {
+            Column(
+                modifier = modifier,
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                SearchBar(navigateSearch = navigateToSearch)
+            }
+        }
+
+        item(span = { GridItemSpan(2) }) {
+            Categories()
+        }
 
         items(movies.itemCount) { index ->
             movies[index]?.let { movie ->
@@ -120,6 +141,26 @@ fun MainScreen(
                         )
                     )
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun Categories(modifier: Modifier = Modifier) {
+    val categories = listOf("Top Rated", "Now Playing", "Upcoming")
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 8.dp),
+        modifier = modifier
+    ) {
+        items(categories, key = { it }) { category ->
+            OutlinedButton(
+                onClick = { }, colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Blue50
+                ), shape = RoundedCornerShape(size = 10.dp)
+            ) {
+                Text(text = category, color = Color.White.copy(alpha = 0.8f))
             }
         }
     }

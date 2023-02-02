@@ -73,7 +73,6 @@ fun MovieInfo(
             NameTitle(title = "Vote Count", name = voteCount)
         }
     }
-//    Divider(startIndent = 50.dp, color = Green100, modifier = modifier.padding(end = 50.dp))
 }
 
 @Composable

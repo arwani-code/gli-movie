@@ -14,10 +14,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.arwani.ahmad.glimovie.ui.components.BottomBar
+import com.arwani.ahmad.glimovie.ui.components.TopMovieBar
 import com.arwani.ahmad.glimovie.ui.home.MainScreen
 import com.arwani.ahmad.glimovie.ui.info.InfoScreen
 import com.arwani.ahmad.glimovie.ui.navigation.Screen
 import com.arwani.ahmad.glimovie.ui.profile.ProfileScreen
+import com.arwani.ahmad.glimovie.ui.search.SearchScreen
 
 @Composable
 fun JetMovieApp(
@@ -29,6 +31,11 @@ fun JetMovieApp(
     val currentRoute = navBackStackEntry?.destination?.route
 
     Scaffold(
+        topBar = {
+            if (currentRoute == Screen.Home.route) {
+                TopMovieBar(canNavigate = false, title = "Gli Movie")
+            }
+        },
         bottomBar = {
             if (currentRoute != Screen.Splash.route && currentRoute != Screen.Info.route) {
                 BottomBar(navController = navController)
@@ -46,7 +53,8 @@ fun JetMovieApp(
                 MainScreen(
                     navigateToDetail = { movieId ->
                         navController.navigate(Screen.Info.createRoute(movieId))
-                    }
+                    },
+                    navigateToSearch = { navController.navigate(Screen.Search.route) }
                 )
             }
             composable(
@@ -62,6 +70,9 @@ fun JetMovieApp(
             }
             composable(Screen.Profile.route) {
                 ProfileScreen()
+            }
+            composable(Screen.Search.route) {
+                SearchScreen(navigate = { navController.navigateUp() })
             }
         }
     }
