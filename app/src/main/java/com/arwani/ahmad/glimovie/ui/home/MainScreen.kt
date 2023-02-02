@@ -1,16 +1,9 @@
 package com.arwani.ahmad.glimovie.ui.home
 
-import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Warning
@@ -24,7 +17,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import com.arwani.ahmad.glimovie.R
 import com.arwani.ahmad.glimovie.ui.theme.Green100
 
@@ -36,6 +28,7 @@ fun MainScreen(
 ) {
     viewModel.fetchGenres()
     val movies = viewModel.getPopularMovies("now_playing").collectAsLazyPagingItems()
+
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),

@@ -43,7 +43,7 @@ fun MovieItem(
             if (movie.posterPath != null) {
                 var isImageLoading by remember { mutableStateOf(false) }
                 val painter = rememberAsyncImagePainter(
-                    model = "https://image.tmdb.org/t/p/w154" + movie.posterPath,
+                    model = "https://image.tmdb.org/t/p/w500" + movie.posterPath,
                 )
                 isImageLoading = when (painter.state) {
                     is AsyncImagePainter.State.Loading -> true
