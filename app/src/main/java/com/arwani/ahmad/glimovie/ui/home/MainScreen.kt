@@ -1,36 +1,40 @@
 package com.arwani.ahmad.glimovie.ui.home
 
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Warning
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import coil.compose.AsyncImagePainter
-import coil.compose.rememberAsyncImagePainter
+import com.arwani.ahmad.glimovie.R
 import com.arwani.ahmad.glimovie.ui.theme.Green100
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    navigateToDetail: (Int) -> Unit
 ) {
+    viewModel.fetchGenres()
     val movies = viewModel.getPopularMovies("now_playing").collectAsLazyPagingItems()
 
     LazyVerticalGrid(
@@ -39,25 +43,27 @@ fun MainScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        items(movies.itemCount, key = { it }) { index ->
+
+        items(movies.itemCount) { index ->
             movies[index]?.let { movie ->
-                MovieItem(movie = movie)
+                MovieItem(movie = movie, navigateToDetail = { navigateToDetail(it) })
             }
         }
+
 
         val loadState = movies.loadState.mediator
         item(span = { GridItemSpan(2) }) {
             if (loadState?.refresh == LoadState.Loading) {
                 Column(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
                     Text(
-                        modifier = Modifier
+                        modifier = modifier
                             .padding(8.dp),
-                        text = "Refresh Loading"
+                        text = stringResource(R.string.refresh_loading)
                     )
 
                     CircularProgressIndicator(color = MaterialTheme.colors.primary)
@@ -66,7 +72,7 @@ fun MainScreen(
 
             if (loadState?.append == LoadState.Loading) {
                 Box(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth()
                         .padding(16.dp),
                     contentAlignment = Alignment.Center,
@@ -84,9 +90,9 @@ fun MainScreen(
                     (loadState.refresh as LoadState.Error).error
 
                 val modifier = if (isPaginatingError) {
-                    Modifier.padding(8.dp)
+                    modifier.padding(8.dp)
                 } else {
-                    Modifier.fillMaxSize()
+                    modifier.fillMaxSize()
                 }
                 Column(
                     modifier = modifier.fillMaxSize(),
@@ -95,14 +101,14 @@ fun MainScreen(
                 ) {
                     if (!isPaginatingError) {
                         Icon(
-                            modifier = Modifier
+                            modifier = modifier
                                 .size(64.dp),
                             imageVector = Icons.Rounded.Warning, contentDescription = null
                         )
                     }
 
                     Text(
-                        modifier = Modifier
+                        modifier = modifier
                             .padding(8.dp),
                         text = error.message ?: error.toString(),
                         textAlign = TextAlign.Center,

@@ -1,5 +1,6 @@
 package com.arwani.ahmad.glimovie.ui.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,7 +22,7 @@ import com.arwani.ahmad.glimovie.data.local.entity.Movie
 @Composable
 fun MovieItem(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
+    navigateToDetail: (Int) -> Unit,
     movie: Movie
 ) {
     Column(
@@ -30,7 +31,7 @@ fun MovieItem(
             .height(230.dp)
             .clip(shape = RoundedCornerShape(size = 8.dp))
             .background(color = Color.Black)
-            .clickable {  }
+            .clickable { navigateToDetail(movie.id) }
     ) {
         Column(
             modifier = modifier
@@ -39,7 +40,7 @@ fun MovieItem(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            if (movie.posterPath != null){
+            if (movie.posterPath != null) {
                 var isImageLoading by remember { mutableStateOf(false) }
                 val painter = rememberAsyncImagePainter(
                     model = "https://image.tmdb.org/t/p/w154" + movie.posterPath,
@@ -48,7 +49,11 @@ fun MovieItem(
                     is AsyncImagePainter.State.Loading -> true
                     else -> false
                 }
-                Image(modifier = modifier.size(100.dp), painter = painter, contentDescription = movie.title)
+                Image(
+                    modifier = modifier.size(100.dp),
+                    painter = painter,
+                    contentDescription = movie.title
+                )
                 if (isImageLoading) {
                     CircularProgressIndicator(
                         modifier = Modifier
@@ -58,6 +63,10 @@ fun MovieItem(
                 }
             }
         }
-        Text(text = movie.title, color = Color.White, modifier = modifier.padding(top = 10.dp, start = 8.dp))
+        Text(
+            text = movie.title,
+            color = Color.White,
+            modifier = modifier.padding(top = 10.dp, start = 8.dp)
+        )
     }
 }
