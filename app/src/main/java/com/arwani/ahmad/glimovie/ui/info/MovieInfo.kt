@@ -44,7 +44,7 @@ fun MovieInfo(
 ) {
     Row(
         modifier = modifier
-            .padding(start = 12.dp, top = 16.dp)
+            .padding(top = 16.dp)
             .fillMaxWidth()
             .height(270.dp)
     ) {
@@ -63,7 +63,7 @@ fun MovieInfo(
         Column(
             modifier = modifier
                 .padding(start = 8.dp)
-                .height(110.dp), verticalArrangement = Arrangement.SpaceEvenly
+                .height(150.dp), verticalArrangement = Arrangement.SpaceEvenly
         ) {
             NameTitle(title = "Title", name = title)
             NameTitle(title = "Release Date", name = releaseDate)

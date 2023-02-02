@@ -1,8 +1,11 @@
 package com.arwani.ahmad.glimovie.ui.info
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arwani.ahmad.glimovie.data.local.entity.GenreMovies
@@ -34,7 +37,10 @@ class InfoViewModel @Inject constructor(private val moviesRepository: MoviesRepo
         MutableStateFlow(UiState.Loading)
     val reviewMovies: StateFlow<UiState<List<Result>>> get() = _reviewUiState
 
-    private val _genres = MutableStateFlow(emptyList<Int>())
+    private var _genres = MutableStateFlow(emptyList<Int>())
+    private val _series = MutableStateFlow(ArrayList<GenreMovies>())
+    val series: StateFlow<List<GenreMovies>>
+        get() = _series
 
     fun getMovieById(id: Int) {
         viewModelScope.launch {
@@ -72,5 +78,19 @@ class InfoViewModel @Inject constructor(private val moviesRepository: MoviesRepo
         }
     }
 
-    fun getAllGenres(): Flow<List<GenreMovies>> = moviesRepository.getGenres()
+    fun getAllGenres() {
+        viewModelScope.launch {
+            moviesRepository.getGenres()
+                .catch {}
+                .collect {
+                    it.forEach { gnr ->
+                        _genres.value.forEach { id ->
+                            if (gnr.id == id) {
+                                _series.value.add(gnr)
+                            }
+                        }
+                    }
+                }
+        }
+    }
 }
