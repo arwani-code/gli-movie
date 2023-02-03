@@ -71,7 +71,7 @@ fun SearchScreen(
                             placeholder = {
                                 Text(
                                     color = Color.White.copy(0.4f),
-                                    text = "Search title ...",
+                                    text = "Search Movie ...",
                                     fontSize = 16.sp,
                                 )
                             },

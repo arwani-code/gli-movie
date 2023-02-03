@@ -2,4 +2,9 @@
     <string name="app_name">Gli Movie</string>
     <string name="refresh_loading">Refresh Loading</string>
     <string name="foto_profile">photo profile</string>
+    <string name="back_button">arrow_back</string>
+    <string name="trailer_title">Trailer</string>
+    <string name="home_title">Home</string>
+    <string name="favorite_title">Favorite</string>
+    <string name="profile_title">Profile</string>
 </resources>

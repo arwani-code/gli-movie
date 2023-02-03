@@ -11,9 +11,11 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.arwani.ahmad.glimovie.R
 import com.arwani.ahmad.glimovie.ui.navigation.NavigationItem
 import com.arwani.ahmad.glimovie.ui.navigation.Screen
 import com.arwani.ahmad.glimovie.ui.theme.Blue100
@@ -28,15 +30,15 @@ fun BottomBar(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val navigationItems = listOf(
-        NavigationItem(title = "Home", icon = Icons.Default.Home, screen = Screen.Home),
+        NavigationItem(title = stringResource(R.string.home_title), icon = Icons.Default.Home, screen = Screen.Home),
         NavigationItem(
-            title = "Trailer", icon = Icons.Default.PlayArrow, screen = Screen.Trailer
+            title = stringResource(R.string.trailer_title), icon = Icons.Default.PlayArrow, screen = Screen.Trailer
         ),
         NavigationItem(
-            title = "Favorite", icon = Icons.Default.Favorite, screen = Screen.Favorite
+            title = stringResource(R.string.favorite_title), icon = Icons.Default.Favorite, screen = Screen.Favorite
         ),
         NavigationItem(
-            title = "Profile", icon = Icons.Default.AccountCircle, screen = Screen.Profile
+            title = stringResource(R.string.profile_title), icon = Icons.Default.AccountCircle, screen = Screen.Profile
         )
     )
     BottomNavigation(

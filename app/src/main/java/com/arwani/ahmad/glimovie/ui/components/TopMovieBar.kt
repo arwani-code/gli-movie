@@ -9,8 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.arwani.ahmad.glimovie.R
 
 @Composable
 fun TopMovieBar(
@@ -33,7 +35,7 @@ fun TopMovieBar(
                     IconButton(onClick = { navigateUp() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "arrow_back",
+                            contentDescription = stringResource(R.string.back_button),
                             tint = Color.White
                         )
                     }
