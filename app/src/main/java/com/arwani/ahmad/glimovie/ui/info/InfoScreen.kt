@@ -9,9 +9,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,6 +24,8 @@ import com.arwani.ahmad.glimovie.VideoActivity
 import com.arwani.ahmad.glimovie.data.network.response.Result
 import com.arwani.ahmad.glimovie.ui.common.UiState
 import com.arwani.ahmad.glimovie.ui.theme.Green100
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun InfoScreen(
@@ -32,6 +34,13 @@ fun InfoScreen(
     movieId: Int,
     navigateBack: () -> Unit
 ) {
+
+    val coroutineScope = rememberCoroutineScope()
+
+    var favorite by remember {
+        mutableStateOf(false)
+    }
+
     val mContext = LocalContext.current
     val genres by infoViewModel.series.collectAsState()
     infoViewModel.getAllGenres()
@@ -65,6 +74,32 @@ fun InfoScreen(
                 Divider(color = Color.White.copy(0.2f))
             }
         },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    favorite = !favorite
+                    coroutineScope.launch {
+                        infoViewModel.setFavoriteMovie(movieId, favorite)
+                    }
+                },
+                modifier = modifier.navigationBarsPadding(),
+                backgroundColor = Green100
+            ) {
+                if (favorite) {
+                    Icon(
+                        imageVector = Icons.Default.Favorite,
+                        contentDescription = "favorite",
+                        tint = MaterialTheme.colors.primary
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Default.FavoriteBorder,
+                        contentDescription = "favorite_border",
+                        tint = MaterialTheme.colors.primary
+                    )
+                }
+            }
+        },
         modifier = modifier,
         backgroundColor = MaterialTheme.colors.primary
     ) { paddingValues ->
@@ -85,6 +120,7 @@ fun InfoScreen(
                                     }
                                     is UiState.Success -> {
                                         val movie = uiState.data
+                                        favorite = movie.isFavorite
                                         Title(title = "Movie Info")
                                         MovieInfo(
                                             genre = genres.joinToString(", ") { it.name },

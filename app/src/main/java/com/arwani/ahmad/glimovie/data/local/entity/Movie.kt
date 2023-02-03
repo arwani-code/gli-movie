@@ -40,6 +40,8 @@ data class Movie(
     @ColumnInfo(name = "genre_ids")
     @SerializedName("genre_ids")
     val genres: List<Int>,
+    @ColumnInfo(name = "favorite")
+    var isFavorite: Boolean = false
 )
 
 class Converters {

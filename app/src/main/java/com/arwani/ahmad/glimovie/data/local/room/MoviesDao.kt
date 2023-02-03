@@ -6,6 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.arwani.ahmad.glimovie.data.local.entity.GenreMovies
 import com.arwani.ahmad.glimovie.data.local.entity.Movie
 import kotlinx.coroutines.flow.Flow
@@ -18,6 +19,9 @@ interface MoviesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertGenres(movies: List<GenreMovies>)
+
+    @Query("UPDATE movies SET favorite = :favorite WHERE id = :movieId")
+    suspend fun updateFavorite(movieId: Int, favorite: Boolean)
 
     @Delete
     suspend fun deleteGenres(genreMovies: List<GenreMovies>)

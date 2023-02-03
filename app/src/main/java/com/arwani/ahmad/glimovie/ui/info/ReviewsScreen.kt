@@ -58,7 +58,8 @@ fun ReviewsScreen(
                     error = painterResource(id = R.drawable.user),
                     contentDescription = review.author,
                     contentScale = ContentScale.FillWidth,
-                    modifier = Modifier.clip(CircleShape)
+                    modifier = Modifier.clip(CircleShape),
+                    placeholder = painterResource(id = R.drawable.user)
                 )
             }
             Spacer(Modifier.width(16.dp))

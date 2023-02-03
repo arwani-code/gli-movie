@@ -95,4 +95,8 @@ class InfoViewModel @Inject constructor(private val moviesRepository: MoviesRepo
                 }
         }
     }
+
+    suspend fun setFavoriteMovie(movieInt: Int, favorite: Boolean) {
+        moviesRepository.setFavorite(movieInt, favorite)
+    }
 }
