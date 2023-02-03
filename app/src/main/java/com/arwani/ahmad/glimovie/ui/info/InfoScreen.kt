@@ -184,7 +184,7 @@ fun InfoScreen(
                             StickDivider()
                             Title(title = "Reviews", modifier = modifier.padding(bottom = 12.dp))
                         }
-                        items(reviews) { item: Result ->
+                        items(reviews, key = { it.id }) { item: Result ->
                             ReviewsScreen(
                                 review = item, modifier = Modifier
                                     .padding(vertical = 4.dp)

@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.arwani.ahmad.glimovie.ui.components.BottomBar
 import com.arwani.ahmad.glimovie.ui.components.TopMovieBar
+import com.arwani.ahmad.glimovie.ui.favorite.FavoriteScreen
 import com.arwani.ahmad.glimovie.ui.home.MainScreen
 import com.arwani.ahmad.glimovie.ui.info.InfoScreen
 import com.arwani.ahmad.glimovie.ui.navigation.Screen
@@ -81,6 +82,11 @@ fun JetMovieApp(
             }
             composable(Screen.Trailer.route) {
                 MovieExoScreen()
+            }
+            composable(Screen.Favorite.route) {
+                FavoriteScreen(navigateToDetail = { movieId ->
+                    navController.navigate(Screen.Info.createRoute(movieId))
+                })
             }
         }
     }

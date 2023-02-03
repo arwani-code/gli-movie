@@ -40,4 +40,7 @@ interface MoviesDao {
 
     @Query("SELECT * FROM movies WHERE title LIKE :name")
     fun searchPosts(name: String): Flow<List<Movie>>
+
+    @Query("SELECT * FROM movies WHERE favorite = 1")
+    fun getFavorites(): Flow<List<Movie>>
 }

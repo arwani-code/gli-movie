@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Gli Movie</string>
     <string name="refresh_loading">Refresh Loading</string>
+    <string name="foto_profile">photo profile</string>
 </resources>

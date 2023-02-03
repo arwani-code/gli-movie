@@ -16,6 +16,8 @@ class MoviesRepository @Inject constructor(
     private val moviesDao: MoviesDao
 ) {
 
+    fun getFavoriteMovies(): Flow<List<Movie>> = moviesDao.getFavorites()
+
     suspend fun setFavorite(movieId: Int, favorite: Boolean) =
         moviesDao.updateFavorite(movieId, favorite)
 

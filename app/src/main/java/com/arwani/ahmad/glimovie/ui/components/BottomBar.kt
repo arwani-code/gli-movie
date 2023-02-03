@@ -6,6 +6,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
@@ -30,6 +31,9 @@ fun BottomBar(
         NavigationItem(title = "Home", icon = Icons.Default.Home, screen = Screen.Home),
         NavigationItem(
             title = "Trailer", icon = Icons.Default.PlayArrow, screen = Screen.Trailer
+        ),
+        NavigationItem(
+            title = "Favorite", icon = Icons.Default.Favorite, screen = Screen.Favorite
         ),
         NavigationItem(
             title = "Profile", icon = Icons.Default.AccountCircle, screen = Screen.Profile
