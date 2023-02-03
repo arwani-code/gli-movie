@@ -34,7 +34,7 @@ class VideoActivity : AppCompatActivity() {
                 val defaultPlayerUiController =
                     DefaultPlayerUiController(thirdPartyYouTubePlayerView, youTubePlayer)
                 defaultPlayerUiController.showFullscreenButton(true)
-           defaultPlayerUiController.setFullScreenButtonClickListener {
+                defaultPlayerUiController.setFullScreenButtonClickListener {
                     if (thirdPartyYouTubePlayerView.isFullScreen()) {
                         thirdPartyYouTubePlayerView.exitFullScreen()
                         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
@@ -49,7 +49,6 @@ class VideoActivity : AppCompatActivity() {
                         }
                     }
                 }
-
 
                 thirdPartyYouTubePlayerView.setCustomPlayerUi(defaultPlayerUiController.rootView)
 

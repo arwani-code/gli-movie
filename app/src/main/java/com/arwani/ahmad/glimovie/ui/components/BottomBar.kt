@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -27,6 +28,9 @@ fun BottomBar(
     val currentRoute = navBackStackEntry?.destination?.route
     val navigationItems = listOf(
         NavigationItem(title = "Home", icon = Icons.Default.Home, screen = Screen.Home),
+        NavigationItem(
+            title = "Trailer", icon = Icons.Default.PlayArrow, screen = Screen.Trailer
+        ),
         NavigationItem(
             title = "Profile", icon = Icons.Default.AccountCircle, screen = Screen.Profile
         )

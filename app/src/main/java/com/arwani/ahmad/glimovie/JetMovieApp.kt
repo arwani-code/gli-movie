@@ -20,6 +20,7 @@ import com.arwani.ahmad.glimovie.ui.info.InfoScreen
 import com.arwani.ahmad.glimovie.ui.navigation.Screen
 import com.arwani.ahmad.glimovie.ui.profile.ProfileScreen
 import com.arwani.ahmad.glimovie.ui.search.SearchScreen
+import com.arwani.ahmad.glimovie.ui.trailer.MovieExoScreen
 
 @Composable
 fun JetMovieApp(
@@ -77,6 +78,9 @@ fun JetMovieApp(
                     navigateToDetail = { movieId ->
                         navController.navigate(Screen.Info.createRoute(movieId))
                     })
+            }
+            composable(Screen.Trailer.route) {
+                MovieExoScreen()
             }
         }
     }
