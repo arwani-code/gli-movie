@@ -24,7 +24,6 @@ import com.arwani.ahmad.glimovie.VideoActivity
 import com.arwani.ahmad.glimovie.data.network.response.Result
 import com.arwani.ahmad.glimovie.ui.common.UiState
 import com.arwani.ahmad.glimovie.ui.theme.Green100
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable

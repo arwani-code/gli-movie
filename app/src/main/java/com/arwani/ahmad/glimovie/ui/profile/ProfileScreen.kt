@@ -1,6 +1,5 @@
 package com.arwani.ahmad.glimovie.ui.profile
 
-import android.media.Image
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

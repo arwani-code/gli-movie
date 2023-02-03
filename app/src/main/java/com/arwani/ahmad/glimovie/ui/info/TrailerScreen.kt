@@ -15,9 +15,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arwani.ahmad.glimovie.R
 import com.arwani.ahmad.glimovie.data.network.response.Video
 import com.arwani.ahmad.glimovie.ui.theme.Red200
-import com.arwani.ahmad.glimovie.R
 
 @Composable
 fun TrailerScreen(

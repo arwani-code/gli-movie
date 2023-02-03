@@ -3,7 +3,6 @@ package com.arwani.ahmad.glimovie.data.repository
 import com.arwani.ahmad.glimovie.data.local.entity.GenreMovies
 import com.arwani.ahmad.glimovie.data.local.entity.Movie
 import com.arwani.ahmad.glimovie.data.local.room.MoviesDao
-import com.arwani.ahmad.glimovie.data.network.response.Genre
 import com.arwani.ahmad.glimovie.data.network.response.Result
 import com.arwani.ahmad.glimovie.data.network.response.Video
 import com.arwani.ahmad.glimovie.data.network.retrofit.MoviesApiService

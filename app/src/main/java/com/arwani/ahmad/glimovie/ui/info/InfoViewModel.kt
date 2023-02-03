@@ -1,23 +1,18 @@
 package com.arwani.ahmad.glimovie.ui.info
 
-import android.util.Log
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arwani.ahmad.glimovie.data.local.entity.GenreMovies
 import com.arwani.ahmad.glimovie.data.local.entity.Movie
-import com.arwani.ahmad.glimovie.data.network.response.Genre
 import com.arwani.ahmad.glimovie.data.network.response.Result
 import com.arwani.ahmad.glimovie.data.network.response.Video
 import com.arwani.ahmad.glimovie.data.repository.MoviesRepository
 import com.arwani.ahmad.glimovie.ui.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
