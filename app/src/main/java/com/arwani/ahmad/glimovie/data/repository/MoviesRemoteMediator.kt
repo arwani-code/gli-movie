@@ -75,7 +75,6 @@ class MoviesRemoteMediator(
 
         try {
             val apiResponse = moviesApiService.getPopularMovies(page = page, playing = playing)
-//            delay(1000L) // For testing only
             val movies = apiResponse.movies
             val endOfPaginationReached = movies.isEmpty()
 
