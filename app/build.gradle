@@ -77,7 +77,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
-    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.code.gson:gson:2.10'
 
     //Hilt
     def hilt_version = "2.44"
@@ -95,4 +95,6 @@ dependencies {
 
     //Coil
     implementation "io.coil-kt:coil-compose:2.2.2"
+
+    implementation "com.google.android.exoplayer:exoplayer:2.18.2"
 }

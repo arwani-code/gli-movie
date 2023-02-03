@@ -1,4 +1,4 @@
-package com.arwani.ahmad.glimovie.ui
+package com.arwani.ahmad.glimovie
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
@@ -37,7 +37,7 @@ fun JetMovieApp(
             }
         },
         bottomBar = {
-            if (currentRoute != Screen.Splash.route && currentRoute != Screen.Info.route) {
+            if (currentRoute != Screen.Splash.route && currentRoute != Screen.Info.route && currentRoute != Screen.Search.route) {
                 BottomBar(navController = navController)
             }
         },
@@ -72,7 +72,11 @@ fun JetMovieApp(
                 ProfileScreen()
             }
             composable(Screen.Search.route) {
-                SearchScreen(navigate = { navController.navigateUp() })
+                SearchScreen(
+                    navigate = { navController.navigateUp() },
+                    navigateToDetail = { movieId ->
+                        navController.navigate(Screen.Info.createRoute(movieId))
+                    })
             }
         }
     }

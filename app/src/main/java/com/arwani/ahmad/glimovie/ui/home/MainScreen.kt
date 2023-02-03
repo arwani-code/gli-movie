@@ -31,7 +31,7 @@ fun MainScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToDetail: (Int) -> Unit,
-    navigateToSearch: () -> Unit
+    navigateToSearch: () -> Unit,
 ) {
     viewModel.fetchGenres()
     val movies = viewModel.getPopularMovies("now_playing").collectAsLazyPagingItems()
@@ -39,9 +39,6 @@ fun MainScreen(
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
 
         item(span = { GridItemSpan(2) }) {
@@ -52,10 +49,6 @@ fun MainScreen(
             ) {
                 SearchBar(navigateSearch = navigateToSearch)
             }
-        }
-
-        item(span = { GridItemSpan(2) }) {
-            Categories()
         }
 
         items(movies.itemCount) { index ->
@@ -80,7 +73,7 @@ fun MainScreen(
                         text = stringResource(R.string.refresh_loading)
                     )
 
-                    CircularProgressIndicator(color = MaterialTheme.colors.primary)
+                    CircularProgressIndicator(color = Color.White)
                 }
             }
 
@@ -146,22 +139,3 @@ fun MainScreen(
     }
 }
 
-@Composable
-fun Categories(modifier: Modifier = Modifier) {
-    val categories = listOf("Top Rated", "Now Playing", "Upcoming")
-    LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(horizontal = 8.dp),
-        modifier = modifier
-    ) {
-        items(categories, key = { it }) { category ->
-            OutlinedButton(
-                onClick = { }, colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Blue50
-                ), shape = RoundedCornerShape(size = 10.dp)
-            ) {
-                Text(text = category, color = Color.White.copy(alpha = 0.8f))
-            }
-        }
-    }
-}

@@ -5,68 +5,83 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import com.arwani.ahmad.glimovie.R
 import com.arwani.ahmad.glimovie.data.local.entity.Movie
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieItem(
     modifier: Modifier = Modifier,
     navigateToDetail: (Int) -> Unit,
     movie: Movie
 ) {
-    Column(
+    Box(
         modifier = modifier
-            .width(180.dp)
-            .height(230.dp)
-            .clip(shape = RoundedCornerShape(size = 8.dp))
-            .background(color = Color.Black)
-            .clickable { navigateToDetail(movie.id) }
+            .fillMaxWidth()
+            .padding(8.dp)
     ) {
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(190.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            if (movie.posterPath != null) {
-                var isImageLoading by remember { mutableStateOf(false) }
-                val painter = rememberAsyncImagePainter(
-                    model = "https://image.tmdb.org/t/p/w500" + movie.posterPath,
+        Card(
+            modifier = modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(15.dp),
+            elevation = 5.dp,
+            onClick = { navigateToDetail(movie.id) }) {
+            Box(modifier = modifier.height(200.dp)) {
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data("https://image.tmdb.org/t/p/w500${movie.posterPath}")
+                        .crossfade(true)
+                        .build(),
+                    error = painterResource(id = R.drawable.ic_broken_image),
+                    contentDescription = movie.title,
+                    contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.ic_image_black)
                 )
-                isImageLoading = when (painter.state) {
-                    is AsyncImagePainter.State.Loading -> true
-                    else -> false
+                Box(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .background(
+                            Brush.verticalGradient(
+                                colors = listOf(
+                                    Color.Transparent,
+                                    Color.Black
+                                ),
+                                startY = 300f
+                            )
+                        )
+                ) {
+
                 }
-                Image(
-                    modifier = modifier.size(100.dp),
-                    painter = painter,
-                    contentDescription = movie.title
-                )
-                if (isImageLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .padding(horizontal = 6.dp, vertical = 3.dp),
-                        color = MaterialTheme.colors.primary,
+                Box(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(12.dp),
+                    contentAlignment = Alignment.BottomStart
+                ) {
+                    Text(
+                        text = movie.title,
+                        style = TextStyle(color = Color.White, fontSize = 16.sp)
                     )
                 }
             }
         }
-        Text(
-            text = movie.title,
-            color = Color.White,
-            modifier = modifier.padding(top = 10.dp, start = 8.dp)
-        )
     }
 }

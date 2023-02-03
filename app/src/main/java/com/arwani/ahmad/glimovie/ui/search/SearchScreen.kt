@@ -2,6 +2,9 @@ package com.arwani.ahmad.glimovie.ui.search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,9 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -23,19 +24,21 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.arwani.ahmad.glimovie.ui.home.MovieItem
 
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
     searchViewModel: SearchViewModel = hiltViewModel(),
     navigate: () -> Unit,
+    navigateToDetail: (Int) -> Unit
 ) {
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
-
+    val getMovies by searchViewModel.getMovies().collectAsState(initial = emptyList())
     Scaffold(
         modifier = modifier.background(MaterialTheme.colors.primary),
         topBar = {
@@ -107,12 +110,15 @@ fun SearchScreen(
             }
         },
         backgroundColor = MaterialTheme.colors.primary
-    ) {
-        Column(
-            modifier = modifier
-                .padding(it)
+    ) { innerPadding ->
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = modifier.padding(innerPadding),
+            contentPadding = PaddingValues(8.dp)
         ) {
-
+            items(getMovies, key = { it.id }) { movie ->
+                MovieItem(navigateToDetail = { navigateToDetail(it) }, movie = movie)
+            }
         }
     }
 }

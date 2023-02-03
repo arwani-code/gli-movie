@@ -33,4 +33,7 @@ interface MoviesDao {
 
     @Query("DELETE FROM movies")
     suspend fun clearAllMovies()
+
+    @Query("SELECT * FROM movies WHERE title LIKE :name")
+    fun searchPosts(name: String): Flow<List<Movie>>
 }

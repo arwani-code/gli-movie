@@ -28,7 +28,8 @@ fun SearchBar(modifier: Modifier = Modifier, navigateSearch: () -> Unit) {
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
-                contentDescription = null
+                contentDescription = null,
+                tint = Color.White.copy(0.4f)
             )
         },
         colors = TextFieldDefaults.textFieldColors(
@@ -38,10 +39,10 @@ fun SearchBar(modifier: Modifier = Modifier, navigateSearch: () -> Unit) {
             unfocusedIndicatorColor = Color.Transparent,
         ),
         placeholder = {
-            Text("Search title ...")
+            Text(text = "Search movie ...", color = Color.White.copy(0.4f))
         },
         modifier = modifier
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+            .padding(16.dp)
             .fillMaxWidth()
             .heightIn(max = 50.dp)
             .border(BorderStroke(width = 1.dp, color = Color.White.copy(0.2f)), shape = RoundedCornerShape(16.dp))

@@ -16,6 +16,8 @@ class MoviesRepository @Inject constructor(
     private val moviesDao: MoviesDao
 ) {
 
+    fun searchPosts(name: String): Flow<List<Movie>> = moviesDao.searchPosts(name)
+
     fun getGenres(): Flow<List<GenreMovies>> = moviesDao.getAllGenres()
 
     fun getReviewMovies(movieId: Int): Flow<List<Result>> = flow {
