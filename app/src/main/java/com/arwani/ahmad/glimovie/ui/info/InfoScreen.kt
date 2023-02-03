@@ -1,6 +1,6 @@
 package com.arwani.ahmad.glimovie.ui.info
 
-import android.util.Log
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,17 +12,17 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.arwani.ahmad.glimovie.VideoActivity
 import com.arwani.ahmad.glimovie.data.network.response.Result
 import com.arwani.ahmad.glimovie.ui.common.UiState
-import com.arwani.ahmad.glimovie.ui.components.TopMovieBar
 import com.arwani.ahmad.glimovie.ui.theme.Green100
 
 @Composable
@@ -32,6 +32,7 @@ fun InfoScreen(
     movieId: Int,
     navigateBack: () -> Unit
 ) {
+    val mContext = LocalContext.current
     val genres by infoViewModel.series.collectAsState()
     infoViewModel.getAllGenres()
     Scaffold(
@@ -46,13 +47,13 @@ fun InfoScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
-                            IconButton(onClick = { navigateBack() }) {
-                                Icon(
-                                    imageVector = Icons.Default.ArrowBack,
-                                    contentDescription = "arrow_back",
-                                    tint = Color.White
-                                )
-                            }
+                        IconButton(onClick = { navigateBack() }) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "arrow_back",
+                                tint = Color.White
+                            )
+                        }
                         Text(
                             modifier = modifier.padding(horizontal = 8.dp, vertical = 12.dp),
                             text = "Detail",
@@ -80,7 +81,6 @@ fun InfoScreen(
                             infoViewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
                                 when (uiState) {
                                     is UiState.Loading -> {
-                                        CircularProgressIndicator()
                                         infoViewModel.getMovieById(movieId)
                                     }
                                     is UiState.Success -> {
@@ -108,7 +108,7 @@ fun InfoScreen(
                                         StickDivider()
                                     }
                                     is UiState.Error -> {
-                                        Text(text = uiState.errorMessage)
+                                        Text(text = uiState.errorMessage, color = Color.White)
                                     }
                                 }
                             }
@@ -129,13 +129,19 @@ fun InfoScreen(
                                         ) {
                                             items(movieVideo, key = { it.id }) { videos ->
                                                 TrailerScreen(videos = videos) {
-
+                                                    val intent =
+                                                        Intent(mContext, VideoActivity::class.java)
+                                                    intent.putExtra(
+                                                        VideoActivity.EXTRA_KEY,
+                                                        videos
+                                                    )
+                                                    mContext.startActivity(intent)
                                                 }
                                             }
                                         }
                                     }
                                     is UiState.Error -> {
-                                        Text(text = uiState.errorMessage)
+                                        Text(text = uiState.errorMessage, color = Color.White)
                                     }
                                 }
                             }
@@ -143,12 +149,15 @@ fun InfoScreen(
                             Title(title = "Reviews", modifier = modifier.padding(bottom = 12.dp))
                         }
                         items(reviews) { item: Result ->
-                            ReviewsScreen(review = item)
+                            ReviewsScreen(
+                                review = item, modifier = Modifier
+                                    .padding(vertical = 4.dp)
+                            )
                         }
                     }
                 }
                 is UiState.Error -> {
-                    Text(text = uiState.errorMessage)
+                    Text(text = uiState.errorMessage, color = Color.White)
                 }
             }
         }

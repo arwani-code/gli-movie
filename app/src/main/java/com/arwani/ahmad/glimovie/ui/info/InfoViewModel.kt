@@ -59,6 +59,7 @@ class InfoViewModel @Inject constructor(private val moviesRepository: MoviesRepo
     fun getMovieVideo(id: Int) {
         viewModelScope.launch {
             _videoUiState.value = UiState.Loading
+            delay(200L)
             moviesRepository.getVideoMovies(id)
                 .catch {
                     _videoUiState.value = UiState.Error(it.message.toString())
@@ -72,6 +73,7 @@ class InfoViewModel @Inject constructor(private val moviesRepository: MoviesRepo
     fun getReviewMovies(movieInt: Int) {
         viewModelScope.launch {
             _reviewUiState.value = UiState.Loading
+            delay(200L)
             moviesRepository.getReviewMovies(movieInt)
                 .catch { _reviewUiState.value = UiState.Error(it.message.toString()) }
                 .collect { _reviewUiState.value = UiState.Success(it) }

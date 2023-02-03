@@ -1,10 +1,15 @@
 package com.arwani.ahmad.glimovie.data.network.response
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class VideoResponse(
     val id: Int,
     val results: List<Video>
-)
+): Parcelable
 
+@Parcelize
 data class Video(
     val id: String,
     val iso_3166_1: String,
@@ -16,4 +21,4 @@ data class Video(
     val site: String,
     val size: Int,
     val type: String
-)
+): Parcelable

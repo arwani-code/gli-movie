@@ -67,9 +67,9 @@ fun SearchScreen(
                             shape = RoundedCornerShape(percent = 30),
                             placeholder = {
                                 Text(
+                                    color = Color.White.copy(0.4f),
                                     text = "Search title ...",
                                     fontSize = 16.sp,
-                                    color = Color.White.copy(0.4f)
                                 )
                             },
                             colors = TextFieldDefaults.textFieldColors(
@@ -108,8 +108,10 @@ fun SearchScreen(
         },
         backgroundColor = MaterialTheme.colors.primary
     ) {
-        Column(modifier = modifier
-            .padding(it)) {
+        Column(
+            modifier = modifier
+                .padding(it)
+        ) {
 
         }
     }
